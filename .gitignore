@@ -1,0 +1,8 @@
+node_modules
+
+dist
+static
+
+.nyc_output
+
+.vscode
