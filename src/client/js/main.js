@@ -6,3 +6,4 @@ function greet(name) {
 }
 
 console.log(greet('John'));
+console.log('baz');
