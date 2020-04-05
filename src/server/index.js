@@ -6,6 +6,7 @@ const app = express();
 const upload = multer();
 
 const home = require('./routes/home').router;
+const contact = require('./routes/contact').router;
 const movies = require('./routes/movies').router;
 
 app.use(express.static('dist'));
@@ -15,6 +16,7 @@ app.set('view engine', 'handlebars');
 app.set('views', 'src/server/views');
 
 app.use('/home', home);
+app.use('/contact', contact);
 app.use('/movies', movies);
 
 app.post('/file', upload.single('uploadedFile'), (req, res, next) => {

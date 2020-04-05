@@ -1,9 +1,5 @@
-const _ = require('lodash');
-
-function greet(name) {
-  const greeting = _.join(['Hello', name]);
-  return greeting;
+function add(x, y) {
+  return x + y;
 }
 
-console.log(greet('John'));
-console.log('baz');
+console.log(add(6, 7));

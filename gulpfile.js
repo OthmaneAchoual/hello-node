@@ -1,13 +1,17 @@
-const { src, dest, parallel } = require('gulp');
+const {
+  src, dest, watch,
+} = require('gulp');
 const sass = require('gulp-sass');
+const rename = require('gulp-rename');
 const browserify = require('browserify');
-const watchify = require('watchify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
-// const uglify = require('gulp-uglify');
 const terser = require('gulp-terser');
 const sourcemaps = require('gulp-sourcemaps');
 const log = require('gulplog');
+const glob = require('glob');
+const es = require('event-stream');
+const path = require('path');
 
 function style() {
   return src('src/client/scss/**/*.scss')
@@ -16,34 +20,28 @@ function style() {
     .pipe(dest('dist/css'));
 }
 
-const b = browserify({
-  entries: 'src/client/js/main.js',
-  debug: true,
-  cache: {},
-  packageCache: {},
-  plugin: [watchify],
-});
+function bundle(done) {
+  glob('src/client/js/*.js', (err, files) => {
+    if (err) done(err);
 
-function bundle() {
-  // set up the browserify instance on a task basis
+    const tasks = files.map((entry) => browserify({ entries: [entry], debug: true })
+      .bundle()
+      .pipe(source(path.basename(entry)))
+      .pipe(rename({
+        extname: '.bundle.js',
+      }))
+      .pipe(buffer())
+      .pipe(sourcemaps.init({ loadMaps: true }))
+      .pipe(terser())
+      .on('error', log.error)
+      .pipe(sourcemaps.write('./'))
+      .pipe(dest('dist/js')));
 
-  return b.bundle()
-    .pipe(source('main.js'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true }))
-    // Add transformation tasks to the pipeline here.
-    .pipe(terser())
-    .on('error', log.error)
-    .pipe(sourcemaps.write('./'))
-    .pipe(dest('dist/js/'));
+    es.merge(tasks).on('end', done);
+  });
 }
 
-b.on('update', bundle);
-b.on('log', log.info);
-
-// function defaultTask(cb) {
-//   // place code for your default task here
-//   cb();
-// }
-
-exports.default = parallel(style, bundle);
+exports.default = function () {
+  watch('src/client/scss/*.scss', style);
+  watch('src/client/js/*.js', bundle);
+};
