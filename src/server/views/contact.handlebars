@@ -1,6 +1,15 @@
-<form id="contact-form" action="/contact" method="post">
-  <input id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
-  <label for="phone">Phone</label>
-  <input type="submit" value="Submit">
-</form>
+<div class="container">
+  <h1 class="form-heading">Contact Us</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <form id="contact-form" action="/contact" method="post">
+        <input class="form-control" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+        <label for="phone">Phone</label>
+        <div>
+          <input class="btn btn-primary" type="submit" value="Submit">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <script src="js/contact.bundle.js"></script>

@@ -1,3 +1,5 @@
+@import 'bootstrap/bootstrap.scss';
+
 $black: #000;
 $white: #fff;
 
@@ -15,5 +17,39 @@ h1 {
   padding: 10px;
   span {
     color: $white;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+// sizing
+
+// spacing
+
+// text
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+// positioning
+
+.form-heading {
+  color: teal;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+  .form-control {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+
+    &:invalid {
+      border: 1px solid rgb(207, 50, 50);
+    }
   }
 }
