@@ -32,7 +32,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-terser": "^1.2.0",
     "gulplog": "^1.0.0",
-    "mocha": "^7.1.1",
+    "mocha": "^10.2.0",
     "node-sass": "^4.13.1",
     "nodemon": "^2.0.2",
     "nyc": "^15.0.0",
